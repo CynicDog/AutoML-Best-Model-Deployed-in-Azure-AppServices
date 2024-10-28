@@ -16,8 +16,6 @@
 ### Download Best Model 
 
 ```powershell
-(base) PS C:\app\configs\downloaded_artifacts\named-outputs\best_model> conda init 
-
 PS C> az ml job download --name $BEST_MODEL_NAME `
         --all --download-path /app/configs/downloaded_artifacts `
         --workspace-name $WS_NAME `
@@ -39,6 +37,7 @@ Solving environment: done
 ### Setup Conda Environment 
 
 ```powershell
+(base) PS C:\app\configs\downloaded_artifacts\named-outputs\best_model> conda init 
 (base) PS C:\app\configs\downloaded_artifacts\named-outputs\best_model> conda create -n automml python=3.9.20
 (base) PS C:\app\configs\downloaded_artifacts\named-outputs\best_model> conda activate automml
 (automml) PS C:\app\configs\downloaded_artifacts\named-outputs\best_model> pip install -r .\requirements.txt
