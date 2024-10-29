@@ -6,7 +6,7 @@
 | Python                     | Python 3.9.20      |
 | Conda                      | conda 24.7.1       | 
 
-## Steps 
+## Local Development Environment Setup  
 
 ### Download Best Model 
 
