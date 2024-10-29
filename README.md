@@ -1,4 +1,4 @@
-# AutoML-Best-Model-Deployed-in-Azure-AppServices
+# AutoML-Pretrained-Model-Deployed-in-Azure-AppServices
 
 ### Version Table
 |                            | **Details**        |
