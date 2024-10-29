@@ -78,9 +78,18 @@ Server: Werkzeug/3.0.4 Python/3.9.20
 
 ### Run the Server as Azure WebApp   
 
-#### 1. Build the image and push to Azure Container Registry (ACR) by running the workflow [image-build-and-push-to-acr.yaml](https://github.com/CynicDog/AutoML-Best-Model-Deployed-in-Azure-AppServices/blob/main/.github/workflows/image-build-and-push-to-acr.yaml).
+#### 1. Create a dedicated Service Principal for the deployment.
+```powershell
+az ad sp create-for-rbac --name "automl-in-webapp" `
+     --role Owner `
+     --scopes /subscriptions/{SUBSCRIPTION_ID} `
+     --sdk-auth
+```
+> This will return a JSON response with details about the created service principal. Save this JSON response as the GitHub repository secret `AZURE_CREDENTIALS`. Also, register additional secrets like `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, `AZURE_TENANT_ID`, and `AZURE_SUBSCRIPTION_ID` with their respective values.
 
-#### 2. Deploy the container on Azure App Service as a Web App.
+#### 2. Build the image and push to Azure Container Registry (ACR) by running the workflow [image-build-and-push-to-acr.yaml](https://github.com/CynicDog/AutoML-Best-Model-Deployed-in-Azure-AppServices/blob/main/.github/workflows/image-build-and-push-to-acr.yaml).
+
+#### 3. Deploy the container on Azure App Service as a Web App.
 - Basic information
   <img width="100%" src="https://github.com/user-attachments/assets/98f57fc3-1119-49c7-9ac2-a2867963006d">
   > On `publish` option, make sure you select `Container`.  
@@ -89,7 +98,7 @@ Server: Werkzeug/3.0.4 Python/3.9.20
   <img width="100%" src="https://github.com/user-attachments/assets/3edc25f0-e0ae-4634-b22a-23c4fa253df6">
   > Select the image previously pushed to ACR. If you don’t need additional networking or monitoring configurations, complete the creation process of the web app.
 
-#### 3. Test the functionality. 
+#### 4. Test the functionality. 
 ```powershell
 PS C:\Users> http POST https://automl-webapp-bge6fpd3ambth9b5.koreacentral-01.azurewebsites.net/predict data:='[ [5.1,3.5,1.4,0.2], [7.0,3.2,4.7,1.4], [7.9,3.8,6.4,2.0], [6.9,3.1,4.9,1.5] ]'
 HTTP/1.1 200 OK
