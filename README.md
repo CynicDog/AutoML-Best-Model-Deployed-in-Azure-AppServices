@@ -48,7 +48,8 @@ Solving environment: done
 
 ### Run the Server Locally 
 ```powershell
-PS C:\Users> http POST http://localhost:8000/predict data:='[ [5.1,3.5,1.4,0.2], [7.0,3.2,4.7,1.4], [7.9,3.8,6.4,2.0], [6.9,3.1,4.9,1.5] ]'
+(automml) PS C:\Users> python main.py 
+(automml) PS C:\Users> http POST http://localhost:8000/predict data:='[ [5.1,3.5,1.4,0.2], [7.0,3.2,4.7,1.4], [7.9,3.8,6.4,2.0], [6.9,3.1,4.9,1.5] ]'
 Connection: close
 Content-Length: 85
 Content-Type: application/json
@@ -64,3 +65,15 @@ Server: Werkzeug/3.0.4 Python/3.9.20
     ]
 }
 ```
+
+### Run as Container
+
+- Pull the image. 
+  ```powerhsell 
+  PS C:\Users> docker pull ghcr.io/cynicdog/automl-best-model-deployed-in-azure-appservices/automl-flask:latest
+  ```
+
+- Run the container.
+  ```
+  PS C:\Users> docker run -p 8000:8000 ghcr.io/cynicdog/automl-best-model-deployed-in-azure-appservices/automl-flask:latest
+  ```
