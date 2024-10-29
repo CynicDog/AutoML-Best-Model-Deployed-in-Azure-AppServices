@@ -82,6 +82,25 @@ PS C:\Users> docker pull ghcr.io/cynicdog/automl-best-model-deployed-in-azure-ap
 PS C:\Users> docker run -p 8000:8000 ghcr.io/cynicdog/automl-best-model-deployed-in-azure-appservices/automl-flask:latest
 ```
 
+#### 3. Test the functionality.
+```powershell
+(automml) PS C:\Users> http POST http://localhost:8000/predict data:='[ [5.1,3.5,1.4,0.2], [7.0,3.2,4.7,1.4], [7.9,3.8,6.4,2.0], [6.9,3.1,4.9,1.5] ]'
+Connection: close
+Content-Length: 85
+Content-Type: application/json
+Date: Tue, 29 Oct 2024 00:28:25 GMT
+Server: Werkzeug/3.0.4 Python/3.9.20
+
+{
+    "predictions": [
+        "Iris-setosa",
+        "Iris-versicolor",
+        "Iris-virginica",
+        "Iris-versicolor"
+    ]
+}
+```
+
 ### C. Run the Server as Azure WebApp   
 
 #### 1. Create a dedicated Service Principal for the deployment.
