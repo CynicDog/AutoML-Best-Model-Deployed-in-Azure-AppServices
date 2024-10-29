@@ -64,7 +64,7 @@ jobs:
         az role assignment create \
           --assignee-object-id $WEB_APP_PRINCIPAL_ID \
           --assignee-principal-type ServicePrincipal \
-          --scope $ACR_ID \
+          --scope /subscriptions/${{ secrets.AZURE_SUBSCRIPTION_ID }}/resourceGroups/${{ env.RG_NAME }} \
           --role "AcrPull"
     
     - name: Deploy the Container Image to Web App
