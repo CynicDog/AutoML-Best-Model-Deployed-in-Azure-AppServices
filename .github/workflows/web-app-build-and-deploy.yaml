@@ -41,11 +41,39 @@ jobs:
           --hyper-v \
           --sku ${{ env.ASP_SKU }}
     
-    - name: Create a Web App 
+    - name: Create a Web App (without image)
       run: |
         az webapp create \
-        --name ${{ env.WA_NAME }} \
-        --plan ${{ env.ASP_NAME }} \
-        --resource-group ${{ env.RG_NAME }} \
-        --basic-auth Enabled \
-        --deployment-container-image-name ${{ env.ACR_URL  }}/${{ env.ACR_IMAGE_NAME }}:latest
+          --name ${{ env.WA_NAME }} \
+          --plan ${{ env.ASP_NAME }} \
+          --resource-group ${{ env.RG_NAME }} \
+          --basic-auth Enabled
+
+    - name: Enable Managed Identity for the Web App
+      run: |
+        az webapp identity assign \
+          --resource-group ${{ env.RG_NAME }} \
+          --name ${{ env.WA_NAME }}
+    
+    - name: Assign AcrPull role to Web App Managed Identity
+      run: |
+        WEB_APP_PRINCIPAL_ID=$(az webapp identity show --name ${{ env.WA_NAME }} --resource-group ${{ env.RG_NAME }} --query principalId --output tsv)
+        
+        az role assignment create \
+          --assignee $WEB_APP_PRINCIPAL_ID \
+          --scope /subscriptions/$${{ secrets.AZURE_SUBSCRIPTION_ID }}/resourceGroups/${{ secrets.RG_NAME }}
+          --role "AcrPull"
+    
+    - name: Deploy the Container Image to Web App
+      run: |
+        az webapp config container set \
+          --name ${{ env.WA_NAME }} \
+          --resource-group ${{ env.RG_NAME }} \
+          --container-image-name ${{ env.ACR_URL }}/${{ env.ACR_IMAGE_NAME }}:latest \
+          --container-registry-url https://${{ env.ACR_URL }}
+    
+    - name: Restart Web App to Apply Changes
+      run: |
+        az webapp restart \
+          --name ${{ env.WA_NAME }} \
+          --resource-group ${{ env.RG_NAME }}
