@@ -17,7 +17,7 @@ jobs:
       # App Service Plan 
       ASP_NAME: automl-webapp-service-plan
       ASP_REGION: koreacentral
-      ASP_SKU: p1v3
+      ASP_SKU: p1v2
 
       # Web App 
       WA_NAME: automl-webapp 
