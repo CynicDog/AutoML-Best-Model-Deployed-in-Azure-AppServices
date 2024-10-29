@@ -69,6 +69,10 @@ jobs:
     
     - name: Deploy the Container Image to Web App
       run: |
+        az acr update \
+          -n ${{ env.ACR_NAME }} \
+          --admin-enabled true
+        
         az webapp config container set \
           --name ${{ env.WA_NAME }} \
           --resource-group ${{ env.RG_NAME }} \
