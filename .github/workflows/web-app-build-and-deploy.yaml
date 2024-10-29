@@ -30,7 +30,12 @@ jobs:
 
     - name: Log in to Azure Container Registry
       run: |
-        az acr login --name ${{ env.ACR_NAME }}
+        az acr login \
+          --name ${{ env.ACR_NAME }}
+        
+        az acr update \
+          --name ${{ env.ACR_NAME }} \
+          --admin-enabled true
     
     - name: Create an App Service Plan
       run: |
@@ -40,7 +45,7 @@ jobs:
           --location ${{ env.ASP_REGION }} \
           --hyper-v \
           --sku ${{ env.ASP_SKU }}
-    
+
     - name: Create a Web App (without image)
       run: |
         az webapp create \
@@ -54,25 +59,24 @@ jobs:
         az webapp identity assign \
           --resource-group ${{ env.RG_NAME }} \
           --name ${{ env.WA_NAME }}
-    
+
     - name: Assign AcrPull role to Web App Managed Identity
       run: |
-        
         WEB_APP_PRINCIPAL_ID=$(az webapp identity show --name ${{ env.WA_NAME }} --resource-group ${{ env.RG_NAME }} --query principalId --output tsv)
-        ACR_ID=$(az acr show --name ${{ env.ACR_NAME }} --query id --output tsv) 
         
         az role assignment create \
           --assignee-object-id $WEB_APP_PRINCIPAL_ID \
           --assignee-principal-type ServicePrincipal \
           --scope /subscriptions/${{ secrets.AZURE_SUBSCRIPTION_ID }}/resourceGroups/${{ env.RG_NAME }} \
           --role "AcrPull"
-    
+
+#    TODO:
+#       WARNING: No credential was provided to access Azure Container Registry. Trying to look up...
+#       WARNING: App settings have been redacted. Use `az webapp/logicapp/functionapp config appsettings list` to view.
+#       ERROR: Operation returned an invalid status 'Unsupported Media Type'
+#       Error: Process completed with exit code 1.
     - name: Deploy the Container Image to Web App
-      run: |
-        az acr update \
-          -n ${{ env.ACR_NAME }} \
-          --admin-enabled true
-        
+      run: |        
         az webapp config container set \
           --name ${{ env.WA_NAME }} \
           --resource-group ${{ env.RG_NAME }} \
