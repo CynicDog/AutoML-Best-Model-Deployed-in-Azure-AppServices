@@ -27,6 +27,10 @@ jobs:
       uses: azure/login@v2.1.0
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Log in to Azure Container Registry
+      run: |
+        az acr login --name ${{ env.ACR_NAME }}
     
     - name: Create an App Service Plan 
       run: |
