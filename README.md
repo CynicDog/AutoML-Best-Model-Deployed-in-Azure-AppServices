@@ -1,7 +1,7 @@
 # AutoML-Best-Model-Deployed-in-Azure-AppServices
 
 ### Version Table
-| **         **              | **Details**        |
+|                            | **Details**        |
 |----------------------------|--------------------|
 | Python                     | Python 3.9.20      |
 | Conda                      | conda 24.7.1       | 
