@@ -78,4 +78,33 @@ Server: Werkzeug/3.0.4 Python/3.9.20
 
 ### Run the Server as Azure WebApp   
 
-- Build the image and push to Azure Container Registry (ACR) by running the workflow [image-build-and-push-to-acr.yaml](https://github.com/CynicDog/AutoML-Best-Model-Deployed-in-Azure-AppServices/blob/main/.github/workflows/image-build-and-push-to-acr.yaml). 
+#### Build the image and push to Azure Container Registry (ACR) by running the workflow [image-build-and-push-to-acr.yaml](https://github.com/CynicDog/AutoML-Best-Model-Deployed-in-Azure-AppServices/blob/main/.github/workflows/image-build-and-push-to-acr.yaml).
+
+#### Deploy the container on Azure App Service as a Web App.
+- Basic information
+  <img width="100%" src="https://github.com/user-attachments/assets/98f57fc3-1119-49c7-9ac2-a2867963006d">
+  > On `publish` option, make sure you select `Container`.  
+
+- Container information
+  <img width="100%" src="https://github.com/user-attachments/assets/3edc25f0-e0ae-4634-b22a-23c4fa253df6">
+  > Select the image previously pushed to ACR. If you don’t need additional networking or monitoring configurations, complete the creation process of the web app.
+
+#### Test the functionality
+```powershell
+PS C:\Users> http POST https://automl-webapp-bge6fpd3ambth9b5.koreacentral-01.azurewebsites.net/predict data:='[ [5.1,3.5,1.4,0.2], [7.0,3.2,4.7,1.4], [7.9,3.8,6.4,2.0], [6.9,3.1,4.9,1.5] ]'
+HTTP/1.1 200 OK
+Content-Length: 85
+Content-Type: application/json
+Date: Tue, 29 Oct 2024 05:49:09 GMT
+Server: Werkzeug/3.0.6 Python/3.9.20
+
+{
+  "predictions": [
+    "Iris-setosa",
+    "Iris-versicolor",
+    "Iris-virginica",
+    "Iris-versicolor"
+  ]
+}
+```
+  
