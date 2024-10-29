@@ -46,3 +46,21 @@ Solving environment: done
 ### Setup Python Interpreter on PyCharm IDE 
 <img width="100%" alt="image" src="https://github.com/user-attachments/assets/5b87323d-a745-4a68-8a3d-afbc7b7b48bd">
 
+### Run the Server Locally 
+```powershell
+PS C:\Users> http POST http://localhost:8000/predict data:='[ [5.1,3.5,1.4,0.2], [7.0,3.2,4.7,1.4], [7.9,3.8,6.4,2.0], [6.9,3.1,4.9,1.5] ]'
+Connection: close
+Content-Length: 85
+Content-Type: application/json
+Date: Tue, 29 Oct 2024 00:28:25 GMT
+Server: Werkzeug/3.0.4 Python/3.9.20
+
+{
+    "predictions": [
+        "Iris-setosa",
+        "Iris-versicolor",
+        "Iris-virginica",
+        "Iris-versicolor"
+    ]
+}
+```
