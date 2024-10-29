@@ -32,28 +32,28 @@ jobs:
       run: |
         az acr login --name ${{ env.ACR_NAME }}
     
-    - name: Create an App Service Plan 
-      run: |
-        az appservice plan create \
-          --resource-group ${{ env.RG_NAME }} \
-          --name ${{ env.ASP_NAME }} \
-          --location ${{ env.ASP_REGION }} \
-          --hyper-v \
-          --sku ${{ env.ASP_SKU }}
+    # - name: Create an App Service Plan 
+    #   run: |
+    #     az appservice plan create \
+    #       --resource-group ${{ env.RG_NAME }} \
+    #       --name ${{ env.ASP_NAME }} \
+    #       --location ${{ env.ASP_REGION }} \
+    #       --hyper-v \
+    #       --sku ${{ env.ASP_SKU }}
     
-    - name: Create a Web App (without image)
-      run: |
-        az webapp create \
-          --name ${{ env.WA_NAME }} \
-          --plan ${{ env.ASP_NAME }} \
-          --resource-group ${{ env.RG_NAME }} \
-          --basic-auth Enabled
+    # - name: Create a Web App (without image)
+    #   run: |
+    #     az webapp create \
+    #       --name ${{ env.WA_NAME }} \
+    #       --plan ${{ env.ASP_NAME }} \
+    #       --resource-group ${{ env.RG_NAME }} \
+    #       --basic-auth Enabled
 
-    - name: Enable Managed Identity for the Web App
-      run: |
-        az webapp identity assign \
-          --resource-group ${{ env.RG_NAME }} \
-          --name ${{ env.WA_NAME }}
+    # - name: Enable Managed Identity for the Web App
+    #   run: |
+    #     az webapp identity assign \
+    #       --resource-group ${{ env.RG_NAME }} \
+    #       --name ${{ env.WA_NAME }}
     
     - name: Assign AcrPull role to Web App Managed Identity
       run: |
@@ -61,7 +61,7 @@ jobs:
         
         az role assignment create \
           --assignee $WEB_APP_PRINCIPAL_ID \
-          --scope /subscriptions/$${{ secrets.AZURE_SUBSCRIPTION_ID }}/resourceGroups/${{ secrets.RG_NAME }}
+          --scope /subscriptions/$${{ secrets.AZURE_SUBSCRIPTION_ID }}/resourceGroups/${{ secrets.RG_NAME }} \
           --role "AcrPull"
     
     - name: Deploy the Container Image to Web App
