@@ -47,5 +47,5 @@ jobs:
         --name ${{ env.WA_NAME }} \
         --plan ${{ env.ASP_NAME }} \
         --resource-group ${{ env.RG_NAME }} \
-        --basic-auth Enabled 
+        --basic-auth Enabled \
         --deployment-container-image-name ${{ env.ACR_URL  }}/${{ env.ACR_IMAGE_NAME }}:latest
