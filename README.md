@@ -44,7 +44,7 @@ Solving environment: done
 
 ## Run the Flask Server  
 
-### Run the Server Locally 
+### A. Run the Server Locally 
 
 #### 1. Run the flask server.
 ```powershell
@@ -70,7 +70,7 @@ Server: Werkzeug/3.0.4 Python/3.9.20
 }
 ```
 
-### Run as Container
+### B. Run as Container
 
 #### 1. Pull the image. 
 ```powerhsell 
@@ -82,7 +82,7 @@ PS C:\Users> docker pull ghcr.io/cynicdog/automl-best-model-deployed-in-azure-ap
 PS C:\Users> docker run -p 8000:8000 ghcr.io/cynicdog/automl-best-model-deployed-in-azure-appservices/automl-flask:latest
 ```
 
-### Run the Server as Azure WebApp   
+### C. Run the Server as Azure WebApp   
 
 #### 1. Create a dedicated Service Principal for the deployment.
 ```powershell
