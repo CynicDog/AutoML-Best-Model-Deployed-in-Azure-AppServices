@@ -1,0 +1,41 @@
+name: Custom Image Build and Push to ACR 
+on:
+  workflow_dispatch:
+
+jobs:
+  prepare-and-push-docker-environment:   
+    runs-on: ubuntu-latest
+    env:
+      ACR_NAME: eunsangacr
+      ACR_URL: ${{ env.ACR_NAME }}.azurecr.io 
+      ACR_IMAGE_NAME: automl-in-webapp
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4.1.7
+
+    - name: Log in to Azure CLI
+      uses: azure/login@v2.1.0
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Log in to Azure Container Registry
+      run: |
+        az acr login --name ${{ env.ACR_NAME }}
+
+    - name: Build Docker image
+      run: |
+        docker build \
+          --build-arg AZURE_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }} \
+          --build-arg AZURE_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }} \
+          --build-arg AZURE_TENANT_ID=${{ secrets.AZURE_TENANT_ID }} \
+          --build-arg AZURE_SUBSCRIPTION_ID=${{ secrets.AZURE_SUBSCRIPTION_ID }} \
+          -t ${{ env.ACR_URL }}/azureml-with-azcli:latest \
+          -f ./Dockerfile
+          
+    - name: Push Docker image to ACR
+      run: |
+        docker push ${{ env.ACR_URL }}/automl-in-webapp:latest  
+
+    - name: Log out from Azure CLI
+      run: az logout
