@@ -6,11 +6,6 @@
 | Python                     | Python 3.9.20      |
 | Conda                      | conda 24.7.1       | 
 
-### Environment Variables 
-- `BEST_MODEL_NAME`: `wheat_brake_11f3294kdb`
-- `WS_NAME`: `inbrein-azure-ml-research-eunsang`
-- `RG_NAME`: `inbrein-azure-ml-research`
-
 ## Steps 
 
 ### Download Best Model 
