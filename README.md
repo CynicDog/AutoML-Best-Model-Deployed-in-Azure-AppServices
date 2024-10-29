@@ -43,8 +43,11 @@ Solving environment: done
 (automml) PS C:\app\configs\downloaded_artifacts\named-outputs\best_model> pip install -r .\requirements.txt
 ```
 
-### Setup Python Interpreter on PyCharm IDE 
-<img width="100%" alt="image" src="https://github.com/user-attachments/assets/5b87323d-a745-4a68-8a3d-afbc7b7b48bd">
+<details><summary><h3>Setup Python Interpreter on PyCharm IDE (Optional)</h3></summary>
+<img width="100%" alt="image" src="https://github.com/user-attachments/assets/5b87323d-a745-4a68-8a3d-afbc7b7b48bd">        
+</details>
+
+## Run the Flask Server  
 
 ### Run the Server Locally 
 ```powershell
@@ -77,3 +80,7 @@ Server: Werkzeug/3.0.4 Python/3.9.20
   ```
   PS C:\Users> docker run -p 8000:8000 ghcr.io/cynicdog/automl-best-model-deployed-in-azure-appservices/automl-flask:latest
   ```
+
+### Run the Server as Azure WebApp   
+
+- Build the image and push to Azure Container Registry (ACR) by running the workflow [image-build-and-push-to-acr.yaml](https://github.com/CynicDog/AutoML-Best-Model-Deployed-in-Azure-AppServices/blob/main/.github/workflows/image-build-and-push-to-acr.yaml). 
