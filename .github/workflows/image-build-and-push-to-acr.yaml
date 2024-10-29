@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ACR_NAME: eunsangacr
-      ACR_URL: ${{ env.ACR_NAME }}.azurecr.io 
+      ACR_URL: eunsangacr.azurecr.io 
       ACR_IMAGE_NAME: automl-in-webapp
 
     steps:
@@ -30,12 +30,12 @@ jobs:
           --build-arg AZURE_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }} \
           --build-arg AZURE_TENANT_ID=${{ secrets.AZURE_TENANT_ID }} \
           --build-arg AZURE_SUBSCRIPTION_ID=${{ secrets.AZURE_SUBSCRIPTION_ID }} \
-          -t ${{ env.ACR_URL }}/azureml-with-azcli:latest \
+          -t ${{ env.ACR_URL }}/${{ env.ACR_IMAGE_NAME }} \
           -f ./Dockerfile
           
     - name: Push Docker image to ACR
       run: |
-        docker push ${{ env.ACR_URL }}/automl-in-webapp:latest  
+        docker push ${{ env.ACR_URL }}/${{ env.ACR_IMAGE_NAME }}:latest  
 
     - name: Log out from Azure CLI
       run: az logout
