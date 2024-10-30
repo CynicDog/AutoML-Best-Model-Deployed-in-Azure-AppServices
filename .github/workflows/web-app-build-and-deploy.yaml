@@ -46,42 +46,19 @@ jobs:
           --hyper-v \
           --sku ${{ env.ASP_SKU }}
 
-    - name: Create a Web App (without image)
+    - name: Create a Web App
       run: |
         az webapp create \
           --name ${{ env.WA_NAME }} \
           --plan ${{ env.ASP_NAME }} \
           --resource-group ${{ env.RG_NAME }} \
-          --basic-auth Enabled
-
-    - name: Enable Managed Identity for the Web App
-      run: |
-        az webapp identity assign \
-          --resource-group ${{ env.RG_NAME }} \
-          --name ${{ env.WA_NAME }}
-
-    - name: Assign AcrPull role to Web App Managed Identity
-      run: |
-        WEB_APP_PRINCIPAL_ID=$(az webapp identity show --name ${{ env.WA_NAME }} --resource-group ${{ env.RG_NAME }} --query principalId --output tsv)
-        
-        az role assignment create \
-          --assignee-object-id $WEB_APP_PRINCIPAL_ID \
-          --assignee-principal-type ServicePrincipal \
-          --scope /subscriptions/${{ secrets.AZURE_SUBSCRIPTION_ID }}/resourceGroups/${{ env.RG_NAME }} \
-          --role "AcrPull"
-
-#    TODO:
-#       WARNING: No credential was provided to access Azure Container Registry. Trying to look up...
-#       WARNING: App settings have been redacted. Use `az webapp/logicapp/functionapp config appsettings list` to view.
-#       ERROR: Operation returned an invalid status 'Unsupported Media Type'
-#       Error: Process completed with exit code 1.
-    - name: Deploy the Container Image to Web App
-      run: |        
-        az webapp config container set \
-          --name ${{ env.WA_NAME }} \
-          --resource-group ${{ env.RG_NAME }} \
-          --container-image-name ${{ env.ACR_URL }}/${{ env.ACR_IMAGE_NAME }}:latest \
-          --container-registry-url https://${{ env.ACR_URL }}
+          --acr-use-identity Enable \
+          --acr-identity '[system]' \
+          --assign-identity '[system]' \
+          --container-registry-url https://${{ env.ACR_URL }} \
+          --container-registry-user ${{ env.ACR_NAME }} \
+          --container-registry-password ${{ secrets.AZURE_CONTAINER_REGISTRY_PASSWORD }} \
+          --container-image-name ${{ env.ACR_URL }}/${{ env.ACR_IMAGE_NAME }}:latest 
     
     - name: Restart Web App to Apply Changes
       run: |
