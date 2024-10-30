@@ -43,7 +43,6 @@ jobs:
           --resource-group ${{ env.RG_NAME }} \
           --name ${{ env.ASP_NAME }} \
           --location ${{ env.ASP_REGION }} \
-          --hyper-v \
           --sku ${{ env.ASP_SKU }} \
           --is-linux
 
