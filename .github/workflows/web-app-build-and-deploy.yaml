@@ -44,7 +44,7 @@ jobs:
           --name ${{ env.ASP_NAME }} \
           --location ${{ env.ASP_REGION }} \
           --hyper-v \
-          --sku ${{ env.ASP_SKU }}
+          --sku ${{ env.ASP_SKU }} \
           --is-linux
 
     - name: Create a Web App
