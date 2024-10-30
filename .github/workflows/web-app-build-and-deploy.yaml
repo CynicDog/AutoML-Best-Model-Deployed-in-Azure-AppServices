@@ -45,6 +45,7 @@ jobs:
           --location ${{ env.ASP_REGION }} \
           --hyper-v \
           --sku ${{ env.ASP_SKU }}
+          --is-linux
 
     - name: Create a Web App
       run: |
