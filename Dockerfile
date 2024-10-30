@@ -1,5 +1,5 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim
+# Use Python parent image for Windows 
+FROM FROM mcr.microsoft.com/windows/python:3.9
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
