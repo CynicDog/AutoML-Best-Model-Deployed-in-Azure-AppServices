@@ -4,7 +4,7 @@ on:
 
 jobs:
   prepare-and-push-docker-environment:   
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     env:
       ACR_NAME: eunsangacr
       ACR_URL: eunsangacr.azurecr.io 
