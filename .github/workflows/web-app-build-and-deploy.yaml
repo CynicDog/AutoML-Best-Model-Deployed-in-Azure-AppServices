@@ -32,11 +32,7 @@ jobs:
       run: |
         az acr login \
           --name ${{ env.ACR_NAME }}
-        
-        az acr update \
-          --name ${{ env.ACR_NAME }} \
-          --admin-enabled true
-    
+
     - name: Create an App Service Plan
       run: |
         az appservice plan create \
