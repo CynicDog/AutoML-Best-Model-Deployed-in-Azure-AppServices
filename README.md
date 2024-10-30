@@ -147,7 +147,7 @@ You can deploy the container using either the Azure CLI or the Azure Portal.
 
 - Basic information
   <img width="100%" src="https://github.com/user-attachments/assets/98f57fc3-1119-49c7-9ac2-a2867963006d">
-  > Navigate to Azure AppServices create a new instance. and  On `publish` option, make sure you select `Container`. Fill in other basic information on your need.
+  > Navigate to Azure AppServices and create a new instance. and  On `publish` option, make sure you select `Container`. Fill in other basic information on your need.
 
 - Container information
   <img width="100%" src="https://github.com/user-attachments/assets/3edc25f0-e0ae-4634-b22a-23c4fa253df6">
