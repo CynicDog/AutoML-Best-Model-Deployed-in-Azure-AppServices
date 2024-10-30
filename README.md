@@ -6,9 +6,10 @@
 | Python                     | Python 3.9.20      |
 | Conda                      | conda 24.7.1       | 
 
-## Local Development Environment Setup  
 
-### Download Best Model 
+### 🌎 Local Development Environment Setup  
+
+#### Download Best Model 
 
 ```powershell
 PS C> az ml job download --name $BEST_MODEL_NAME `
@@ -17,7 +18,7 @@ PS C> az ml job download --name $BEST_MODEL_NAME `
         --resource-group $RG_NAME 
 ```
 
-### Update Conda 
+#### Update Conda 
 ```powershell
 (base) PS C:\app\configs\downloaded_artifacts\named-outputs\best_model> conda update conda
 Channels:
@@ -29,7 +30,7 @@ Solving environment: done
 # All requested packages already installed.
 ```
 
-### Setup Conda Environment 
+#### Setup Conda Environment 
 
 ```powershell
 (base) PS C:\app\configs\downloaded_artifacts\named-outputs\best_model> conda init 
@@ -42,9 +43,9 @@ Solving environment: done
 <img width="100%" alt="image" src="https://github.com/user-attachments/assets/5b87323d-a745-4a68-8a3d-afbc7b7b48bd">        
 </details>
 
-## Run the Flask Server  
+### 👩🏼‍🚀 Run the Flask Server  
 
-### A. Run the Server Locally 
+## A. Run the Server Locally 
 
 #### 1. Run the flask server.
 ```powershell
@@ -70,7 +71,7 @@ Server: Werkzeug/3.0.4 Python/3.9.20
 }
 ```
 
-### B. Run as Container
+## B. Run as Container
 
 #### 1. Pull the image. 
 ```powerhsell 
@@ -101,7 +102,7 @@ Server: Werkzeug/3.0.4 Python/3.9.20
 }
 ```
 
-### C. Run the Server as Azure WebApp   
+## C. Run the Server as Azure WebApp   
 
 #### 1. Create a dedicated Service Principal for the deployment.
 ```powershell
