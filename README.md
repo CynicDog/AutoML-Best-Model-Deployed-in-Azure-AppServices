@@ -125,7 +125,7 @@ az ad sp create-for-rbac --name "automl-in-webapp" `
 
 #### 4. Test the functionality. 
 ```powershell
-PS C:\Users> http POST https://automl-webapp-bge6fpd3ambth9b5.koreacentral-01.azurewebsites.net/predict data:='[ [5.1,3.5,1.4,0.2], [7.0,3.2,4.7,1.4], [7.9,3.8,6.4,2.0], [6.9,3.1,4.9,1.5] ]'
+PS C:\Users> http POST https://automl-webapp.azurewebsites.net/predict data:='[ [5.1,3.5,1.4,0.2], [7.0,3.2,4.7,1.4], [7.9,3.8,6.4,2.0], [6.9,3.1,4.9,1.5] ]'
 HTTP/1.1 200 OK
 Content-Length: 85
 Content-Type: application/json
