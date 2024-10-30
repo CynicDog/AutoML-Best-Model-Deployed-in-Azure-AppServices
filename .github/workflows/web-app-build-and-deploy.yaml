@@ -58,7 +58,7 @@ jobs:
           --container-registry-url https://${{ env.ACR_URL }} \
           --container-registry-user ${{ env.ACR_NAME }} \
           --container-registry-password ${{ secrets.AZURE_CONTAINER_REGISTRY_PASSWORD }} \
-          --container-image-name ${{ env.ACR_URL }}/${{ env.ACR_IMAGE_NAME }}:latest 
+          --container-image-name ${{ env.ACR_IMAGE_NAME }}:latest 
     
     - name: Restart Web App to Apply Changes
       run: |
