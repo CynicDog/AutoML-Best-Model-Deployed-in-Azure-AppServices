@@ -39,7 +39,7 @@ Solving environment: done
 (automml) PS C:\app\configs\downloaded_artifacts\named-outputs\best_model> pip install -r .\requirements.txt
 ```
 
-<details><summary><h3>Setup Python Interpreter on PyCharm IDE (Optional)</h3></summary>
+<details><summary><h4>Setup Python Interpreter on PyCharm IDE (Optional)</h4></summary>
 <img width="100%" alt="image" src="https://github.com/user-attachments/assets/5b87323d-a745-4a68-8a3d-afbc7b7b48bd">        
 </details>
 
