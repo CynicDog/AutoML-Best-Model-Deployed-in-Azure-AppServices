@@ -52,7 +52,7 @@ jobs:
           --name ${{ env.WA_NAME }} \
           --plan ${{ env.ASP_NAME }} \
           --resource-group ${{ env.RG_NAME }} \
-          --acr-use-identity Enable \
+          --acr-use-identity Enabled \
           --acr-identity '[system]' \
           --assign-identity '[system]' \
           --container-registry-url https://${{ env.ACR_URL }} \
