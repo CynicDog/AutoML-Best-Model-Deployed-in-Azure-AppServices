@@ -115,6 +115,31 @@ az ad sp create-for-rbac --name "automl-in-webapp" `
 #### 2. Build the image and push to Azure Container Registry (ACR) by running the workflow [image-build-and-push-to-acr.yaml](https://github.com/CynicDog/AutoML-Best-Model-Deployed-in-Azure-AppServices/blob/main/.github/workflows/image-build-and-push-to-acr.yaml).
 
 #### 3. Deploy the container on Azure App Service as a Web App.
+
+You can deploy the container using either the Azure CLI or the Azure Portal.
+
+<details><summary><h5>3-a. Deploy with Azure CLI.</h5></summary>
+
+- Enable Admin user.
+
+  If enabled, you can use the registry name as username and admin user access key as password to docker login to your container registry.
+  ```bash
+    az acr update \
+      --name ${{ env.ACR_NAME }} \
+      --admin-enabled true
+        
+    az acr credential show \
+      --name ${{ env.ACR_NAME }} \
+      --resource-group ${{ env.RG_NAME }}
+  ```
+  > This will return a list of two passwords. Save the first password as a repository secret `AZURE_CONTAINER_REGISTRY_PASSWORD`. 
+  
+- Run [deploy-web-app.yaml](https://github.com/CynicDog/AutoML-Pretrained-Model-Deployed-in-Azure-AppServices/blob/main/.github/workflows/deploy-web-app.yaml) workflow to deploy the container as a Web App. 
+
+</details>
+
+<details><summary><h5>3-b. Deploy on Azure Portal GUI.</h5></summary>
+
 - Basic information
   <img width="100%" src="https://github.com/user-attachments/assets/98f57fc3-1119-49c7-9ac2-a2867963006d">
   > On `publish` option, make sure you select `Container`.  
@@ -122,6 +147,7 @@ az ad sp create-for-rbac --name "automl-in-webapp" `
 - Container information
   <img width="100%" src="https://github.com/user-attachments/assets/3edc25f0-e0ae-4634-b22a-23c4fa253df6">
   > Select the image previously pushed to ACR. If you don’t need additional networking or monitoring configurations, complete the creation process of the web app.
+</details>
 
 #### 4. Test the functionality. 
 ```powershell
