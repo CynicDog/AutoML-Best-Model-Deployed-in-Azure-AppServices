@@ -45,7 +45,7 @@ Solving environment: done
 
 ### 👩🏼‍🚀 Run the Flask Server  
 
-## A. Run the Server Locally 
+## A. Run the Server in Local Python Environment 
 
 #### 1. Run the flask server.
 ```powershell
@@ -71,7 +71,7 @@ Server: Werkzeug/3.0.4 Python/3.9.20
 }
 ```
 
-## B. Run as Container
+## B. Run the Server in a Local Docker Container
 
 #### 1. Pull the image. 
 ```powerhsell 
