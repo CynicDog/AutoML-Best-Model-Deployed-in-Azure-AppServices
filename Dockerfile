@@ -1,5 +1,8 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim
+# Set the default base image
+ARG BASE_IMAGE=python:3.9-slim
+
+# Use the base image specified by the build argument
+FROM ${BASE_IMAGE}
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
