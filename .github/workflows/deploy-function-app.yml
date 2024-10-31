@@ -46,7 +46,7 @@ jobs:
     - name: Build Docker image
       run: |
         docker build \
-          --build-arg BASE_IMAGE=${{ env.SUPPORTED_PYTHON_BASE_IMAGE }}
+          --build-arg BASE_IMAGE=${{ env.SUPPORTED_PYTHON_BASE_IMAGE }} \
           -t ${{ env.ACR_URL }}/${{ env.ACR_IMAGE_NAME }} \
           -f ./Dockerfile .
           
