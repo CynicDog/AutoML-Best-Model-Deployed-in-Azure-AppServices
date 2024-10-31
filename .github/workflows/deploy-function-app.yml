@@ -71,7 +71,7 @@ jobs:
         az acr login \
           --name ${{ env.ACR_NAME }}
     
-    # Being an idempotent operation, update an ASP if already exists.  
+    # Being an idempotent operation, this step will update an ASP if already exists.  
     - name: Create an App Service Plan
       run: |
         az appservice plan create \
