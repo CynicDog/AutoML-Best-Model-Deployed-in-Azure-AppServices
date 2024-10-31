@@ -119,7 +119,7 @@ Server: Werkzeug/3.0.4 Python/3.9.20
 
 #### 1. Create a dedicated Service Principal for the deployment.
 ```powershell
-az ad sp create-for-rbac --name "automl-in-webapp" `
+az ad sp create-for-rbac --name "automl-in-appservices" `
      --role Owner `
      --scopes /subscriptions/{SUBSCRIPTION_ID} `
      --sdk-auth
@@ -190,7 +190,7 @@ Server: Werkzeug/3.0.6 Python/3.9.20
 
 #### 1. Create a dedicated Service Principal for the deployment.
 ```powershell
-az ad sp create-for-rbac --name "automl-in-webapp" `
+az ad sp create-for-rbac --name "automl-in-appservices" `
      --role Owner `
      --scopes /subscriptions/{SUBSCRIPTION_ID} `
      --sdk-auth
