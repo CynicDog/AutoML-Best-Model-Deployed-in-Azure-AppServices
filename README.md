@@ -1,11 +1,16 @@
 # AutoML-Pretrained-Model-Deployed-in-Azure-AppServices
 
+### Index 
+1. [A. Run the Server in Local Python Environment](#a-run-the-server-in-local-python-environment)
+2. [B. Run the Server in a Local Docker Container](#b-run-the-server-in-a-local-docker-container)
+3. [C. Run the Container as Azure WebApp](#c-run-the-container-as-azure-webapp)
+4. [D. Run the Container as Azure Function App (Serverless)](#d-run-the-container-as-azure-function-app-serverless)
+
 ### Version Table
 |                            | **Details**        |
 |----------------------------|--------------------|
 | Python                     | Python 3.9.20      |
 | Conda                      | conda 24.7.1       | 
-
 
 ### 🌎 Local Development Environment Setup  
 
