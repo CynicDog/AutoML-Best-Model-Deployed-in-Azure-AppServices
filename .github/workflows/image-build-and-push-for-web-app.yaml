@@ -1,4 +1,4 @@
-name: Custom Image Build and Push to ACR 
+name: Custom Image Build for a Web App and Push to ACR 
 on:
   workflow_dispatch:
 
