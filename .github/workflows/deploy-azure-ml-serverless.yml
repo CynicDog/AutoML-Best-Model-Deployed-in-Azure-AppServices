@@ -1,0 +1,95 @@
+name: Build and deploy Python project to Azure Function App - azure-ml-serverless
+
+on:
+  workflow_dispatch:
+
+env:
+  # Resource Group 
+  RG_NAME: inbrein-azure-ml-research
+
+  # Storage Account 
+  SA_NAME: inbreinazureml3666078547
+
+  # Azure Container Registry 
+  ACR_NAME: eunsangacr
+  ACR_URL: eunsangacr.azurecr.io 
+  ACR_IMAGE_NAME: automl-serverless
+
+  # Supported base images for Azure Function App 
+  SUPPORTED_PYTHON_BASE_IMAGE: mcr.microsoft.com/azure-functions/python:4-nightly-python3.9-slim
+  
+  # App Service Plan 
+  ASP_NAME: automl-webapp-service-plan
+  ASP_REGION: koreacentral
+  ASP_SKU: p1v3
+
+  # Function App 
+  FA_NAME: automl-serverless 
+
+jobs:
+  image-build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4.1.7
+
+    - name: Log in to Azure CLI
+      uses: azure/login@v2.1.0
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Log in to Azure Container Registry
+      run: |
+        az acr login --name ${{ env.ACR_NAME }}
+
+    - name: Build Docker image
+      run: |
+        docker build \
+          --build-arg BASE_IMAGE=${{ env.SUPPORTED_PYTHON_BASE_IMAGE }}
+          -t ${{ env.ACR_URL }}/${{ env.ACR_IMAGE_NAME }} \
+          -f ./Dockerfile .
+          
+    - name: Push Docker image to ACR
+      run: |
+        docker push ${{ env.ACR_URL }}/${{ env.ACR_IMAGE_NAME }}:latest  
+
+    - name: Log out from Azure CLI
+      run: az logout
+
+  deploy-container:
+    runs-on: ubuntu-latest
+    needs: image-build      
+    steps:
+    - name: Log in to Azure CLI
+      uses: azure/login@v2.1.0
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Log in to Azure Container Registry
+      run: |
+        az acr login \
+          --name ${{ env.ACR_NAME }}
+    
+    # Being an idempotent operation, update an ASP if already exists.  
+    - name: Create an App Service Plan
+      run: |
+        az appservice plan create \
+          --resource-group ${{ env.RG_NAME }} \
+          --name ${{ env.ASP_NAME }} \
+          --location ${{ env.ASP_REGION }} \
+          --sku ${{ env.ASP_SKU }} \
+          --is-linux
+
+    - name: Create a Function App 
+      run: |
+        az functionapp create \
+          --name ${{ env.FA_NAME }} \
+          --resource-group ${{ env.RG_NAME }} \
+          --storage-account ${{ env.SA_NAME }} \
+          --plan ${{ env.ASP_NAME }}
+          --os-type Linux \
+          --registry-server ${{ env.ACR_URL }} \
+          --registry-username ${{ env.ACR_NAME }} \
+          --registry-password ${{ secrets.AZURE_CONTAINER_REGISTRY_PASSWORD }} \
+          --image ${{ env.ACR_URL }}/${{ env.ACR_IMAGE_NAME }}:latest
