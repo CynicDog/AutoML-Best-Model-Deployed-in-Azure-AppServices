@@ -1,4 +1,4 @@
-name: Build and deploy Python project to Azure Function App - azure-ml-serverless
+name: Create Function App and Deploy the Application  
 
 on:
   workflow_dispatch:
