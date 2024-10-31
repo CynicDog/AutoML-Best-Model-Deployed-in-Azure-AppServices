@@ -102,7 +102,7 @@ Server: Werkzeug/3.0.4 Python/3.9.20
 }
 ```
 
-## C. Run the Server as Azure WebApp   
+## C. Run the Container as Azure WebApp   
 
 #### 1. Create a dedicated Service Principal for the deployment.
 ```powershell
@@ -113,7 +113,7 @@ az ad sp create-for-rbac --name "automl-in-webapp" `
 ```
 > This will return a JSON response with details about the created service principal. Save this JSON response as the GitHub repository secret `AZURE_CREDENTIALS`. Also, register additional secrets like `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, `AZURE_TENANT_ID`, and `AZURE_SUBSCRIPTION_ID` with their respective values.
 
-#### 2. Build the image and push to Azure Container Registry (ACR) by running the workflow [image-build-and-push-to-acr.yaml](https://github.com/CynicDog/AutoML-Best-Model-Deployed-in-Azure-AppServices/blob/main/.github/workflows/image-build-and-push-to-acr.yaml).
+#### 2. Build the image and push to Azure Container Registry (ACR) by running the workflow [image-build-and-push-for-web-app.yaml](https://github.com/CynicDog/AutoML-Pretrained-Model-Deployed-in-Azure-AppServices/blob/main/.github/workflows/image-build-and-push-for-web-app.yaml).
 
 #### 3. Deploy the container on Azure App Service as a Web App.
 
@@ -173,3 +173,34 @@ Server: Werkzeug/3.0.6 Python/3.9.20
 }
 ```
   
+## D. Run the Container as Azure Function App (Serverless) 
+
+#### 1. Create a dedicated Service Principal for the deployment.
+```powershell
+az ad sp create-for-rbac --name "automl-in-webapp" `
+     --role Owner `
+     --scopes /subscriptions/{SUBSCRIPTION_ID} `
+     --sdk-auth
+```
+> This will return a JSON response with details about the created service principal. Save this JSON response as the GitHub repository secret `AZURE_CREDENTIALS`. Also, register additional secrets like `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, `AZURE_TENANT_ID`, and `AZURE_SUBSCRIPTION_ID` with their respective values.
+
+#### 2. Build the image for the container and deploy it on Azure Function App by runnning the workflow [deploy-function-app.yml](https://github.com/CynicDog/AutoML-Pretrained-Model-Deployed-in-Azure-AppServices/blob/main/.github/workflows/deploy-function-app.yml). 
+
+#### 3. Test the functionality. 
+```powershell
+PS C:\Users> http POST https://automl-serverless.azurewebsites.net/predict data:='[ [5.1,3.5,1.4,0.2], [7.0,3.2,4.7,1.4], [7.9,3.8,6.4,2.0], [6.9,3.1,4.9,1.5] ]'
+HTTP/1.1 200 OK
+Content-Length: 85
+Content-Type: application/json
+Date: Thu, 31 Oct 2024 01:48:10 GMT
+Server: Werkzeug/3.0.6 Python/3.9.20
+
+{
+    "predictions": [
+        "Iris-setosa",
+        "Iris-versicolor",
+        "Iris-virginica",
+        "Iris-versicolor"
+    ]
+}
+```
