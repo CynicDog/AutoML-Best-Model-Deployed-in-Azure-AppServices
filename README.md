@@ -1,13 +1,5 @@
 # AutoML-Pretrained-Model-Deployed-in-Azure-AppServices
 
-### TL;DR 
-
-Run the following command to check the functionality of the deployed container: 
-```powershell
-http POST https://automl-serverless.azurewebsites.net/predict data:='[ [5.1,3.5,1.4,0.2] ]'
-```
-> The server will return a prediction for the provided iris input data. 
-
 ### Index 
 1. [A. Run the Server in Local Python Environment](#a-run-the-server-in-local-python-environment)
 2. [B. Run the Server in a Local Docker Container](#b-run-the-server-in-a-local-docker-container)
